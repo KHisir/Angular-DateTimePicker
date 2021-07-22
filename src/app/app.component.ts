@@ -16,7 +16,7 @@ export class AppComponent {
   selectMode: SelectMode = SelectMode.Range;
   pickerType: PickerType = PickerType.DateTime;
   pickerTriggerType: PickerTriggerType = PickerTriggerType.Button;
-  language: string = 'tr';
+  language: string = 'en';
 
   // Playground
   pickerLanguageList: string[] = ['de', 'en', 'en-gb', 'tr', 'it'];
