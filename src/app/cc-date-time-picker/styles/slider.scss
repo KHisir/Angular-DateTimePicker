@@ -1,0 +1,130 @@
+// excess height to improve interactive area / accessibility
+$height: 20px;
+$thumb-height: 13px;
+$track-height: 3px;
+
+// colours
+// $upper-color: #cfcfcf;
+// $lower-color: #0199ff;
+// $thumb-color: #0199ff;
+// $thumb-hover-color: #55c2ff;
+
+// $upper-background: linear-gradient(to bottom, $upper-color, $upper-color) 100% 50% / 100% $track-height no-repeat transparent;
+// $lower-background: linear-gradient(to bottom, $lower-color, $lower-color) 100% 50% / 100% $track-height no-repeat transparent;
+
+// // Webkit cannot style progress so we fake it with a long shadow
+// // on the thumb element
+// @function webkit-slider-thumb-shadow($i: 1) {
+//   // $val: #{$i}px 0 0 -#{($thumb-height - $track-height) / 2} #{$upper-color};
+//   $val: #{$i}px 0 0 -#{($thumb-height - $track-height) / 2} inherit;
+//   @if $i == 1 {
+//     @for $k from 2 through 1000 {
+//       $val: #{$val}, webkit-slider-thumb-shadow($k);
+//     }
+//   }
+//   @return $val;
+// }
+
+input[type=range] {
+  display: block;
+  appearance: none;
+  width: 100%;
+  margin: 0;
+  height: $height;
+  overflow: hidden;
+  cursor: pointer;
+  
+  &:focus {
+    outline: none;
+  }
+}
+
+// Webkit
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: $height;
+  // background: $lower-background;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  position: relative;
+  appearance: none;
+  height: $thumb-height;
+  width: $thumb-height;
+  // background: $thumb-color;
+  border-radius: 100%;
+  border: 0;
+  top: 50%;
+  margin-top: (-$thumb-height/2);
+  // box-shadow: webkit-slider-thumb-shadow();
+  transition: background-color 150ms;
+}
+
+// Firefox
+input[type=range]::-moz-range-track,
+input[type=range]::-moz-range-progress {
+  width: 100%;
+  height: $height;
+  // background: $upper-background;
+}
+
+// input[type=range]::-moz-range-progress {
+//   background: $lower-background;
+// }
+
+input[type=range]::-moz-range-thumb {
+  appearance: none;
+  margin: 0;
+  height: $thumb-height;
+  width: $thumb-height;
+  // background: $thumb-color;
+  border-radius: 100%;
+  border: 0;
+  transition: background-color 150ms;
+}
+
+// Internet Exploder
+input[type=range]::-ms-track {
+  width: 100%;
+  height: $height;
+  border: 0;
+  // color needed to hide track marks
+  color: transparent;
+  background: transparent;
+}
+
+// input[type=range]::-ms-fill-lower {
+//   background: $lower-background;
+// }
+
+// input[type=range]::-ms-fill-upper {
+//   background: $upper-background;
+// }
+
+input[type=range]::-ms-thumb {
+  appearance: none;
+  height: $thumb-height;
+  width: $thumb-height;
+  // background: $thumb-color;
+  border-radius: 100%;
+  border: 0;
+  transition: background-color 150ms;
+  // IE Edge thinks it can support -webkit prefixes
+  top: 0;
+  margin: 0;
+  box-shadow: none;
+}
+
+// input[type=range]:hover,
+// input[type=range]:focus {
+
+//   &::-webkit-slider-thumb {
+//     background-color: $thumb-hover-color;
+//   }
+//   &::-moz-range-thumb {
+//     background-color: $thumb-hover-color;
+//   }
+//   &::-ms-thumb {
+//     background-color: $thumb-hover-color;
+//   }
+// }

@@ -1,0 +1,70 @@
+<div class="content" [ngClass]="{'pickerType-DateTime':pickerType === PickerType.DateTime, 
+'pickerType-Date': pickerType === PickerType.Date, 
+'pickerType-Month':pickerType === PickerType.Month, 
+'pickerType-Year':pickerType === PickerType.Year, 
+'pickerType-Week':pickerType === PickerType.Week,
+'pickerType-Time':pickerType === PickerType.Time}">
+
+  <div class="input-container" *ngIf="showInputContainer === true">
+    <input type="text" [(ngModel)]="inputDate" (blur)="inputOnChange($event)" (keyup.enter)="inputOnChange($event)" placeholder="{{getDateFormatExampleByCountry()}}">
+    <span *ngIf="inputDateIsInvalid === true">&#9888;</span>
+  </div>
+
+  <div class="content-inner">
+
+    <div class="date-container" *ngIf="showDateContainer === true">
+      <div class="year scrollable" *ngIf="showYearContainer === true" #yearContainer>
+        <ul>
+          <li [attr.id]="'#' + year" *ngFor="let year of years" title="{{year}}" (click)="yearOnChange(year)"
+            [class.active-item]="dt.year() === year">
+            {{year}}
+          </li>
+        </ul>
+      </div>
+      <!-- year  -->
+
+      <div class="month scrollable" *ngIf="showMonthContainer === true" #monthContainer>
+        <ul>
+          <li [attr.id]="'#' + month.Number" *ngFor="let month of monthsInYear" title="{{month.Name}}"
+            (click)="monthOnChange(month)" [class.active-item]="dt.month() === month.Number">
+            {{month.Name}}
+          </li>
+        </ul>
+      </div>
+      <!-- month  -->
+
+      <div class="day scrollable" *ngIf="showDayContainer === true" #dayContainer>
+        <ul>
+          <li [attr.id]="'#' + day.Number" *ngFor="let day of daysInMonth" title="{{day.Number}} {{day.Name}}"
+            (click)="dayOnChange(day)" [class.active-item]="dt.date() === day.Number" [class.gray-text]="day.IsWeekend">
+            {{day.Number}} {{day.ShortName}}
+          </li>
+        </ul>
+      </div>
+      <!-- day  -->
+
+      <div class="week scrollable" *ngIf="showWeekContainer === true">
+        <ul>
+          <li [attr.id]="'#' + week.WeekNr" *ngFor="let week of weeksInMonth" (click)="weekOnChange(week)"
+            [class.active-item]="dt.isoWeek() === week.WeekNr"
+            title="({{week.WeekNr}}) {{week.Start.format('L')}} - {{week.End.format('L')}}">
+            ({{week.WeekNr}})
+            {{week.Start.format('L')}} - {{week.End.format('L')}}
+          </li>
+        </ul>
+      </div>
+      <!-- week  -->
+    </div>
+    <div class="time-container" *ngIf="showTimeContainer === true">
+      <div>
+        <span *ngIf="dt.hour() < 10">0</span><span>{{dt.hour()}}:</span>
+        <span *ngIf="dt.minute() < 10">0</span><span>{{dt.minute()}}</span>
+      </div>
+
+      <input type="range" min="0" max="23" [value]="dt.hour()" (input)="hoursOnChanged($event)">
+      <input type="range" min="0" max="59" [value]="dt.minute()" (input)="minuteOnChanged($event)">
+
+      <button class="link-button" type="button" (click)="setNow()"><span>Now!</span></button>
+    </div>
+  </div>
+</div>

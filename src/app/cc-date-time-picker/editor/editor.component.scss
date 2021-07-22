@@ -1,0 +1,223 @@
+@import "../styles/slider.scss";
+@import "../styles/variables.scss";
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 40px auto;
+  height: 100%;
+
+  .input-container {
+    padding: 5px;
+    display: flex;
+
+    > input {
+      width: 100%;
+    }
+  }
+
+  .content-inner {
+    display: grid;
+  }
+
+  &.pickerType-DateTime {
+    .content-inner {
+      grid-template-columns: 1fr 150px;
+      grid-template-rows: 1fr;
+    }
+  }
+
+  // &.pickerType-Date,
+  // &.pickerType-Month,
+  // &.pickerType-Week,
+  // &.pickerType-Year,
+  // &.pickerType-Time {
+  //   .content-inner {
+  //     grid-template-columns: 1fr;
+  //     grid-template-rows: 1fr;
+  //   }
+  // }
+
+  &.pickerType-Year,
+  &.pickerType-Month,
+  &.pickerType-Time {
+    grid-template-rows: 1fr;
+  }
+}
+
+.date-container {
+  display: flex;
+  > div {
+    position: relative;
+    margin: 5px;
+    > ul {
+      position: absolute;
+    }
+  }
+
+  > .year {
+    flex: 1 1;
+  }
+  > .month {
+    flex: 2 2;
+  }
+  > .day {
+    flex: 1 1;
+  }
+  > .week {
+    flex: 2 2;
+  }
+}
+
+.time-container {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 0 10px;
+}
+
+.pickerType-DateTime, .pickerType-Date {
+  .date-container {
+    min-width: 320px;
+  }
+}
+
+.pickerType-Month {
+  .date-container {
+    min-width: 320px;
+    > .month {
+      flex: 1 1;
+    }
+    > .year {
+      flex: 1 1;
+    }
+  }
+}
+
+.pickerType-Week {
+  .date-container {
+    min-width: 400px;
+    > .month {
+      flex: 1 1;
+    }
+  }
+}
+
+.pickerType-Year {
+  .date-container {
+    > .year {
+      flex: auto;
+    }
+  }
+}
+
+.pickerType-Time {
+  .time-container {
+    height: 50%;
+    align-self: center;
+    justify-content: space-between;
+  }
+}
+
+// Medium devices (tablets, less than 992px)
+@media (max-width: 991.98px) {
+  .date-container ul li {
+    padding: 1px;
+  }
+}
+
+// Small devices (landscape phones, less than 768px)
+@media (max-width: 767.98px) {
+  .content {
+    &.pickerType-DateTime {
+      .content-inner {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 80px;
+      }
+    }
+  }
+
+  .time-container {
+    justify-content: space-between;
+  }
+
+  .date-container ul li {
+    padding: 2px;
+  }
+}
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) {
+  .content {
+    &.pickerType-DateTime {
+      .content-inner {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 125px;
+      }
+    }
+  }
+
+  .date-container {
+    min-width: auto !important;
+  }
+
+  .time-container {
+    justify-content: space-between;
+    padding: 10px;
+  }
+
+  .date-container ul li {
+    padding: 3px;
+  }
+}
+
+  // Firefox
+  input[type="range"]::-moz-range-track,
+  input[type="range"]::-moz-range-progress {
+    background: linear-gradient(to bottom, $secondary-color-hover, $secondary-color-hover) 100% 50% / 100% 3px
+      no-repeat transparent;
+  }
+  input[type="range"]::-moz-range-progress {
+    background: linear-gradient(to bottom, $primary-color, $primary-color) 100% 50% / 100% 3px
+      no-repeat transparent;
+  }
+  input[type="range"]::-moz-range-thumb {
+    background: $primary-color;
+  }
+
+  // Internet Exploder
+  input[type="range"]::-ms-fill-upper {
+    background: linear-gradient(to bottom, $secondary-color-hover, $secondary-color-hover) 100% 50% / 100% 3px
+      no-repeat transparent;
+  }
+  input[type="range"]::-ms-fill-lower {
+    background: linear-gradient(to bottom, $primary-color, $primary-color) 100% 50% / 100% 3px
+      no-repeat transparent;
+  }
+  input[type="range"]::-ms-thumb {
+    background: $primary-color;
+  }
+
+  // Webkit
+  input[type="range"]::-webkit-slider-runnable-track {
+    background: linear-gradient(to bottom, $secondary-color-hover, $secondary-color-hover) 100% 50% / 100% 3px
+      no-repeat transparent;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    background: $primary-color;
+    box-shadow: #6c757d;
+  }
+
+  input[type="range"]:hover,
+  input[type="range"]:focus {
+    &::-webkit-slider-thumb {
+      background-color: $primary-color;
+    }
+    &::-moz-range-thumb {
+      background-color: $primary-color;
+    }
+    &::-ms-thumb {
+      background-color: $primary-color;
+    }
+  }

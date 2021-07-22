@@ -1,0 +1,323 @@
+@import "./styles/variables.scss";
+
+* {
+  font-family: quicksand,open sans,roboto,open sans,nunito,sans-serif;
+}
+
+.dtp-toggle-button {
+  display: flex;
+  align-items: center;
+  width: auto;
+  line-height: 15px;
+  // smin-width: 250px;
+  // width: calc(100% - 1rem); // wegen button padding 2x 0.5rem
+  > span {
+    margin: 0 10px;
+    font-weight: bold;
+  }
+}
+
+::ng-deep *,
+*::before,
+*::after {
+  box-sizing: initial !important;
+}
+
+::ng-deep input {
+  line-height: normal;
+  background-clip: padding-box;
+}
+
+::ng-deep button {
+  cursor: pointer;
+}
+
+::ng-deep .active-item {
+  font-size: 22px;
+  font-weight: normal;
+  color: $primary-color;
+}
+
+::ng-deep .scrollable {
+  overflow-y: auto;
+  overflow-x: hidden;
+  // scroll-behavior: smooth; // Animates scrolling - "smooth" scrolling
+}
+
+::ng-deep ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+
+  li {
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+::ng-deep .scrollable::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+::ng-deep .scrollable {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+::ng-deep button {
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border-radius: $border-radius;
+  border: 1px solid transparent;
+  &:disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.4;
+  }
+  &.primary-button {
+    background-color: $primary-color;
+    color: $secondary-color;
+    &:hover {
+      -webkit-box-shadow: 0px 0px 5px 0px $primary-color-hover;
+      -moz-box-shadow: 0px 0px 5px 0px $primary-color-hover;
+      box-shadow: 0px 0px 5px 0px $primary-color-hover;
+    }
+  }
+
+  &.secondary-button {
+    background-color: transparent;
+    border: 1px solid $border-color;
+    font-weight: bold;
+    &:hover {
+      -webkit-box-shadow: 0px 0px 5px 0px $secondary-color-hover;
+      -moz-box-shadow: 0px 0px 5px 0px $secondary-color-hover;
+      box-shadow: 0px 0px 5px 0px $secondary-color-hover;
+    }
+  }
+  &.link-button {
+    background-color: transparent;
+    color: $primary-color;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+::ng-deep .scrollable ul li:hover {
+  color: $primary-color;
+}
+
+::ng-deep input[type="text"] {
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  padding: 0.25rem 0.5rem;
+  font-size: inherit;
+}
+
+#kh-dt-picker {
+  // font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica",
+  //   "Arial", sans-serif;
+
+  &.backdrop {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $backdrop;
+    z-index: 2;
+
+    // display: none;
+    display: flex;
+
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+
+    overflow: auto;
+  }
+
+  #wrapper {
+    border-radius: $border-radius;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    height: 325px;
+    background-color: $secondary-color;
+  }
+
+  #sidebar {
+    padding: 15px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+
+    background-color: $primary-color;
+    color: $secondary-color;
+
+    > ul {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      > li {
+        cursor: pointer;
+        margin: 2px 0;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  #wrapper-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 50px auto 40px;
+
+    #header {
+      display: grid;
+      grid-template-columns: 1fr;
+
+      .gray-text:not(.active-item) {
+        opacity: 0.5;
+      }
+
+      > div.active {
+        background-color: $primary-color;
+        color: $secondary-color;
+      }
+
+      > #btn-from.active {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        &::after {
+          border-left: 20px solid $primary-color;
+        }
+      }
+
+      > #btn-from {
+        padding-left: 10px;
+      }
+
+      > #btn-to.active::before {
+        border-left: 20px solid $secondary-color;
+      }
+
+      &.range-selector {
+        grid-template-columns: 1fr 1fr;
+        > #btn-from {
+          // border-top-left-radius: 0;
+          border-top-right-radius: 0;
+        }
+
+        > #btn-from,
+        #btn-to {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          position: relative;
+        }
+
+        > #btn-to {
+          justify-content: flex-end;
+          padding-right: 10px;
+        }
+
+        > #btn-from::after {
+          content: "";
+          border-bottom: 25px solid transparent;
+          border-top: 25px solid transparent;
+          position: absolute;
+          right: -20px;
+        }
+
+        > #btn-to::before {
+          content: "";
+          border-bottom: 25px solid transparent;
+          border-top: 25px solid transparent;
+          position: absolute;
+          left: 0;
+        }
+
+        > #btn-from.active {
+          border-top-left-radius: 5px;
+        }
+
+        > #btn-to.active {
+          border-top-right-radius: 5px;
+        }
+      }
+    }
+
+    .kh-container-from,
+    .kh-container-to {
+      height: 100%;
+    }
+
+    #footer {
+      text-align: right;
+      padding: 5px;
+
+      button {
+        margin-left: 7.5px;
+        transition: all 0.3s;
+      }
+    }
+  }
+
+  // @media (max-width: 650px) {
+  //   #wrapper {
+  //     height: 400px;
+  //   }
+  // }
+
+  // Medium devices (tablets, less than 992px)
+  @media (max-width: 991.98px) {
+    #sidebar {
+      > ul {
+        > li {
+          cursor: pointer;
+          margin: 3px 0;
+        }
+      }
+    }
+  }
+
+  // Small devices (landscape phones, less than 768px)
+  @media (max-width: 767.98px) {
+    #wrapper {
+      grid-template-columns: 1fr;
+      width: 95vw;
+      height: 95vh;
+    }
+
+    #wrapper-inner {
+      min-width: auto !important;
+    }
+
+    #sidebar {
+      display: none;
+    }
+
+    #header {
+      &.range-selector {
+        > #btn-from.active {
+          border-top-left-radius: 5px !important;
+        }
+      }
+    }
+  }
+}

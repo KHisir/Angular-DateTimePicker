@@ -1,0 +1,30 @@
+<div class="display-container">
+  <div *ngIf="pickerType === PickerType.DateTime">
+    <small>{{dt.format('YYYY')}}</small>
+    <span>{{dt.format('ddd')}} {{dt.format('DD')}} {{dt.format('MMM')}} <small>{{dt.format('LT')}}</small></span>
+  </div>
+
+  <div *ngIf="pickerType === PickerType.Date">
+    <small>{{dt.format('YYYY')}}</small>
+    <span>{{dt.format('ddd')}} {{dt.format('DD')}} {{dt.format('MMM')}}</span>
+  </div>
+
+  <div *ngIf="pickerType === PickerType.Month">
+    <small>{{dt.format('YYYY')}}</small>
+    <span>{{dt.format('MMMM')}}</span>
+  </div>
+
+  <div *ngIf="pickerType === PickerType.Year">
+    <span>{{dt.format('YYYY')}}</span>
+  </div>
+
+  <div *ngIf="pickerType === PickerType.Week">
+    <small>{{dt.format('YYYY')}} (W-{{dt.format('WW')}})</small>
+    <span>{{dt.format('ddd')}} {{dt.format('DD')}} {{dt.format('MMM')}}</span>
+  </div>
+  
+  <div *ngIf="pickerType === PickerType.Time">
+    <span>{{dt.format('LT')}}</span>
+  </div>
+</div>
+

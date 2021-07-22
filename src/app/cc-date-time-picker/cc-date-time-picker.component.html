@@ -1,0 +1,63 @@
+<link href="https://fonts.googleapis.com/css?family=Quicksand:400,700" rel="stylesheet">
+
+<button class="dtp-toggle-button primary-button" type="button" (click)="openPicker()" [ngClass]="pickerTriggerType === PickerTriggerType.Link ? 'link-button' : 'primary-button'">
+  <app-timestamp-text [dt]="FromOrigin" [pickerType]="pickerType"></app-timestamp-text>
+  <span *ngIf="selectMode === SelectMode.Range">-</span>
+  <app-timestamp-text [dt]="ToOrigin" [pickerType]="pickerType" *ngIf="selectMode === SelectMode.Range"></app-timestamp-text>
+</button>
+
+<div id="kh-dt-picker" class="backdrop" *ngIf="pickerIsEnabled === true">
+  <div id="wrapper" [style.text-align]="pickerType === PickerType.Year ? 'center' : ''">
+
+    <div id="sidebar" *ngIf="sidebarEnabled() === true">
+      <ul>
+        <li *ngFor="let item of preconfiguredDateSelection" (click)="preconfiguredDateOnClicked(item)"
+          [style.margin-bottom.px]="item.Type === PreConfiguredDateType.Today ? 10 : ''">
+          {{item.Description}}
+          <!-- <hr *ngIf="item.Type === PreConfiguredDateType.Today"> -->
+        </li>
+      </ul>
+    </div>
+
+    <div id="wrapper-inner" [style.min-width.px]="pickerType === PickerType.Year ? 200 : 350">
+      <div id="header" [class.range-selector]="selectMode === SelectMode.Range">
+        <div id="btn-from" (click)="currentDateType = DateType.From"
+          [class.active]="currentDateType === DateType.From"
+          [style.border-top-left-radius.px]="sidebarEnabled() === true ? 0 : ''">
+          <app-timestamp-text [dt]="From" [pickerType]="pickerType"></app-timestamp-text>
+        </div>
+        <div id="btn-to" (click)="currentDateType = DateType.To"
+          *ngIf="selectMode === SelectMode.Range" [class.active]="currentDateType === DateType.To">
+          <app-timestamp-text [dt]="To" [pickerType]="pickerType"></app-timestamp-text>
+        </div>
+      </div>
+
+      <div id="content">
+        <div class="kh-container-from" *ngIf="currentDateType === DateType.From">
+          <app-editor [dt]="From" [pickerType]="pickerType" #childFrom></app-editor>
+        </div>
+        <div class="kh-container-to" *ngIf="selectMode === SelectMode.Range && currentDateType === DateType.To">
+          <app-editor [dt]="To" [pickerType]="pickerType" #childTo></app-editor>
+        </div>
+      </div>
+
+      <div id="footer">
+        <div>
+          <button class="secondary-button" type="button" (click)="cancel()">Cancel</button>
+          <button class="primary-button" type="button" (click)="apply()"
+            [disabled]="selectMode === SelectMode.Range && To.isBefore(From)">Apply</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Test: -->
+  <!-- <div style="background-color: #ffffff;">
+    from: {{from}}<br>
+    to: {{to}}<br><hr>
+
+    from new: {{From.toDate()}}<br>
+    to new: {{To.toDate()}}
+  </div> -->
+</div>
