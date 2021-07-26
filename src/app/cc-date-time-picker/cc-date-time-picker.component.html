@@ -6,7 +6,7 @@
   <app-timestamp-text [dt]="ToOrigin" [pickerType]="pickerType" *ngIf="selectMode === SelectMode.Range"></app-timestamp-text>
 </button>
 
-<div id="kh-dt-picker" class="backdrop" *ngIf="pickerIsEnabled === true">
+<div id="dtp-wrapper" class="backdrop" *ngIf="pickerIsEnabled === true">
   <div id="wrapper" [style.text-align]="pickerType === PickerType.Year ? 'center' : ''">
 
     <div id="sidebar" *ngIf="sidebarEnabled() === true">
@@ -33,10 +33,10 @@
       </div>
 
       <div id="content">
-        <div class="kh-container-from" *ngIf="currentDateType === DateType.From">
+        <div class="dt-container" *ngIf="currentDateType === DateType.From">
           <app-editor [dt]="From" [pickerType]="pickerType" #childFrom></app-editor>
         </div>
-        <div class="kh-container-to" *ngIf="selectMode === SelectMode.Range && currentDateType === DateType.To">
+        <div class="dt-container" *ngIf="selectMode === SelectMode.Range && currentDateType === DateType.To">
           <app-editor [dt]="To" [pickerType]="pickerType" #childTo></app-editor>
         </div>
       </div>
